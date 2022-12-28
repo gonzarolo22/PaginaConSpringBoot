@@ -27,4 +27,23 @@ private UserRepository userRepository;
         return userRepository.findAll();
     }
 
+    public User save(User newUser) {
+        return userRepository.save(newUser);
+    }
+
+    public void delete(Long id) {
+        userRepository.delete(new User(id));
+    }
+
+    public User update(User newUser, Long id) {
+        return
+                userRepository.findById(id)
+                        .map(User -> {
+                            User.setEmail(newUser.getEmail());
+                            User.setBirthDate(newUser.getBirthDate());
+                            User.setName(newUser.getName());
+                            return userRepository.save(User);
+                        }
+                        ).get();
+    }
 }
